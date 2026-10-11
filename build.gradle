@@ -1,0 +1,64 @@
+plugins {
+    id "fabric-loom" version "${loom}"
+}
+
+version = mod_version
+group = maven_group
+
+base {
+    archivesName = archives_base_name
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven { url = "https://api.modrinth.com/maven" }
+        }
+        filter { includeGroup "maven.modrinth" }
+    }
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        museplayer {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mc}"
+    mappings "net.fabricmc:yarn:${yarn}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${loader}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric}"
+
+    def vlc = "4.10.1"
+    implementation "uk.co.caprica:vlcj:${vlc}"
+    include "uk.co.caprica:vlcj:${vlc}"
+    include "uk.co.caprica:vlcj-natives:4.8.3"
+
+    modCompileOnly "maven.modrinth:vivecraft:${vivecraft}"
+}
+
+processResources {
+    def ver = project.version
+    inputs.property "version", ver
+    filesMatching("fabric.mod.json") {
+        expand "version": ver
+    }
+}
+
+jar {
+    from("LICENSE")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

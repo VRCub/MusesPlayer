@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "museplayer",
+  "version": "${version}",
+  "name": "Muses Player",
+  "description": "圆满难得，遗憾常在。",
+  "authors": ["VRCub", "PuddingKC"],
+  "license": "GPL-3.0",
+  "contact": {
+    "sources": "https://github.com/VRCub/MusesPlayer"
+  },
+  "icon": "assets/muses/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": ["com.puddingkc.muses.MusesPlayer"],
+    "client": ["com.puddingkc.muses.MusesPlayerClient"]
+  },
+  "mixins": [
+    {
+      "config": "museplayer.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "vivecraft": "*"
+  }
+}
